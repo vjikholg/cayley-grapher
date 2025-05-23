@@ -1,7 +1,11 @@
-import ForceGraph3D from './structs/3d-force-graph'; 
-import { FiniteGroup } from './structs/finitegroup';
+// import ForceGraph3D from '../modules/vendors/3d-force-graph.min.js'; 
 
-class CayleyGraph extends ForceGraph3D {
+
+
+import { FiniteGroup } from './structs/finitegroup.js';
+import { Matrix } from './structs/matrix.js';
+
+export class CayleyGraph {
     /** 
      * A Cayley Graph, or Cayley diagram, is a graph that encodes the structure in a Group which is a direct 
      * consequent of Cayley's theorem, stating every graph is isomorphic to a subgroup of its own symmetric group
@@ -19,39 +23,41 @@ class CayleyGraph extends ForceGraph3D {
      * 
      * @param {FiniteGroup} group - a finite group and its elements
      */
-    constructor(group, _docId) {
+    constructor(group, _domId) {
         const key2idx = new Map();
         let nodes = []; 
 
+
         // caching elements so we can map from key -> element id. 
-        for (let i = 0; i < groups.elems.size; i++) {
-            nodes.push({id: i, label: el._key, value: 4})
-            let temp = group.elems.get(i); 
-            key2idx.set(temp._key, i); 
+        // building node list while we're at it
+        for (const [i, el] of group.elems.entries()) {
+            nodes.push({id: i, label: el.key, value: 4}) // value -> size of node
+            key2idx.set(el.key, i);
         }
 
+        console.log(nodes);
+        
+        // building link list
+        // for each element, mult elem with generator, check target 
         let links = []; 
 
         for (const g of group.elems) {
-            for (let h of group.generators) {
+            for (let h of group.generators) { // group generators kept as int indixes in
                 let temp = g.mult(group.elems.get(h)); 
-                let target = key2idx.get(temp._key);
                 links.push({
-                    source: key2idx.get(temp._key), 
-                    target: target 
+                    source: key2idx.get(g.key), 
+                    target: key2idx.get(temp.key) 
                 })
             }
         }
  
-    this.graph = ForceGraph3D(document.getElementById(_docId))
+    this.graph = ForceGraph3D()(document.getElementById('3d-graph'))
     .nodeId('id')
     .nodeLabel('label')
     .nodeVal('value')
+    .linkDirectionalArrowLength(5.5)
+    .linkDirectionalArrowRelPos(1)
     .linkDirectionalParticles(2)
-    graphData({
-        nodes: nodes, 
-        links: links
-    })
-    
+    .graphData({nodes, links})
     }
 }

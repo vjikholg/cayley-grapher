@@ -1,0 +1,12 @@
+{
+  "name": "cayley-graph",
+  "version": "1.0.0",
+  "description": "Prototype Cayley Graph Generator ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Victor",
+  "license": "ISC",
+  "type": "module"
+}

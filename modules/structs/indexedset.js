@@ -4,7 +4,7 @@
  * membership testing.
  */
 
-import { Matrix } from "../matrix";
+// import { Matrix } from "../matrix.js";
 
 export class indexedSet {
     /* --------- STORAGE ---------- */  
@@ -31,7 +31,7 @@ export class indexedSet {
         const k = x.key;
         if(!this.#pos.has(x.key)) {              
             this.#pos.set(k, this.#arr.length); // set element to index id, fast check to determine membership 
-            this.#arr.push(x);             // push an element, indexed access 
+            this.#arr.push(x);                  // push an element, indexed access 
         }
         return this; 
     }

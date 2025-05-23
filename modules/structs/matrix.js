@@ -5,7 +5,7 @@
  * 
  */
 
-import {FiniteFieldRegistry} from "./finitefield"; // keep singleton registry of finite field! 
+import {FiniteFieldRegistry} from "./finitefield.js"; // keep singleton registry of finite field! 
 export class Matrix { 
     constructor(order, m, n) { 
         this.glf = FiniteFieldRegistry.getField(order); // YES THIS IS BETTER WHAT WAS I THINKING 

@@ -1,5 +1,5 @@
-import { Matrix } from "./matrix";
-import { indexedSet } from "./indexedset";
+import { Matrix } from "./matrix.js";
+import { indexedSet } from "./indexedset.js";
 
 export class FiniteGroup {
     /**
@@ -15,6 +15,9 @@ export class FiniteGroup {
         
         // keeps initial length of elems - keep index of generators rather than generators themselves
         this.generators = [];
+        for (let i = 0; i < generator.length; i++) {
+            this.generators.push(i); 
+        }
 
         this.makeGroup(); 
         this.order = this.elems.size; 
