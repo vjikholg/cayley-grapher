@@ -21,4 +21,36 @@ const mtc = groupData.generators.map((mtx) => {
 
 const group = new FiniteGroup(mtc, groupData.name); 
 
-const Graph = new CayleyGraph(group, '3d-graph');
+let currentGraph = new CayleyGraph(group, '3d-graph'); 
+
+const sel = document.getElementById('group-select');
+
+allGroups.forEach((g,i) => {
+    const opt = document.createElement('option');
+    opt.value = i; 
+    opt.innerHTML = g.name; 
+    sel.appendChild(opt); 
+}); 
+
+sel.addEventListener('change', (e) => {
+    const idx = parseInt(sel.value);
+    const groupData = allGroups[idx]; 
+
+    const mtc = groupData.generators.map((mtx) => {
+    const temp = new Matrix(groupData.glforder, mtx.length); 
+    temp.contents = mtx; 
+    return temp;
+    }); 
+
+    const group = new FiniteGroup(mtc, groupData.name);
+    if (currentGraph) {
+        currentGraph.graph._destructor();
+    }
+
+    currentGraph = new CayleyGraph(group, '3d-graph');
+});
+
+sel.dispatchEvent(new Event('change'));
+
+
+
