@@ -24,18 +24,29 @@ export class CayleyGraph {
      * @param {FiniteGroup} group - a finite group and its elements
      */
     constructor(group, _domId) {
+        this.graph = ForceGraph3D()(document.getElementById('3d-graph'))
+        .nodeId('id')
+        .nodeLabel('label')
+        .nodeVal('value')
+        .linkDirectionalArrowLength(5.5)
+        .linkDirectionalArrowRelPos(1)
+        .linkDirectionalParticles(2)
+        .nodeRelSize([1])
+        
+            this.update(group);
+    }
+
+    update(group) {
         const key2idx = new Map();
         let nodes = []; 
-
-
-        // caching elements so we can map from key -> element id. 
+            // caching elements so we can map from key -> element id. 
         // building node list while we're at it
         for (const [i, el] of group.elems.entries()) {
             nodes.push({id: i, label: el.key, value: 4}) // value -> size of node
             key2idx.set(el.key, i);
         }
 
-        console.log(nodes);
+        // console.log(nodes);
         
         // building link list
         // for each element, mult elem with generator, check target 
@@ -50,14 +61,7 @@ export class CayleyGraph {
                 })
             }
         }
- 
-    this.graph = ForceGraph3D()(document.getElementById('3d-graph'))
-    .nodeId('id')
-    .nodeLabel('label')
-    .nodeVal('value')
-    .linkDirectionalArrowLength(5.5)
-    .linkDirectionalArrowRelPos(1)
-    .linkDirectionalParticles(2)
-    .graphData({nodes, links})
+
+        this.graph.graphData({nodes,links});
     }
 }

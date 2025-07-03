@@ -43,11 +43,10 @@ sel.addEventListener('change', (e) => {
     }); 
 
     const group = new FiniteGroup(mtc, groupData.name);
-    if (currentGraph) {
-        currentGraph.graph._destructor();
-    }
+    currentGraph.update(group);
+    
 
-    currentGraph = new CayleyGraph(group, '3d-graph');
+
 });
 
 sel.dispatchEvent(new Event('change'));
