@@ -23,20 +23,31 @@ export class CayleyGraph {
      * 
      * @param {FiniteGroup} group - a finite group and its elements
      */
+
+
     constructor(group, _domId) {
-        this.graph = ForceGraph3D()(document.getElementById('3d-graph'))
+        // handle 3d-force-graph logic
+        this.graph = ForceGraph3D()(document.getElementById(_domId))
         .nodeId('id')
         .nodeLabel('label')
         .nodeVal('value')
         .linkDirectionalArrowLength(5.5)
         .linkDirectionalArrowRelPos(1)
-        .linkDirectionalParticles(2)
+        .linkDirectionalParticles(1)
+        .linkDirectionalParticleWidth(1.4)
+        .linkDirectionalParticleSpeed(0.003)
         .nodeRelSize([1])
         
-            this.update(group);
+        // handle d3 logic
+        this.graph.d3Force('link')
+            .distance(link => 30);
+        
+        this.update(group);
+        
     }
 
     update(group) {
+        const palette = getGeneratorPalette(group.generators.length, {s: 80, l: 45});
         const key2idx = new Map();
         let nodes = []; 
             // caching elements so we can map from key -> element id. 
@@ -57,11 +68,62 @@ export class CayleyGraph {
                 let temp = g.mult(group.elems.get(h)); 
                 links.push({
                     source: key2idx.get(g.key), 
-                    target: key2idx.get(temp.key) 
+                    target: key2idx.get(temp.key), 
+                    gen: h
                 })
             }
         }
 
-        this.graph.graphData({nodes,links});
+        this.graph.graphData({nodes,links})
+            .linkColor(link => palette[link.gen])
+            .linkOpacity(1)
     }
+}
+
+/**
+ * getGeneratorPalette(n [, opts])
+ * --------------------------------
+ * Evenly distributes n colours around the hue wheel using the
+ * golden-ratio step so successive hues are as far apart as possible.
+ *
+ * @param {number} n              – how many colours you need
+ * @param {Object} [opts]         – optional tuning
+ *        {number} opts.s  (0-100) – saturation   (default 65)
+ *        {number} opts.l  (0-100) – lightness    (default 55)
+ *        {number} opts.h0 (0-360) – starting hue (default random)
+ *
+ * @returns {string[]} array of `#rrggbb` strings length = n
+ *
+ * Examples
+ * --------
+ * const palette = getGeneratorPalette(4);      // 4 distinct colours
+ * const pastel  = getGeneratorPalette(6, {s:50,l:70});
+ */
+
+function getGeneratorPalette(n, opts = {}) {
+    const { s = 65, l = 55, h0 = Math.random() * 360 } = opts;
+    const φ = 360 * 0.61803398875;   // golden-ratio step in degrees
+    const toHex = c =>
+        ('0' + Math.round(c).toString(16)).slice(-2);   // convert 0-255 → "00"-"ff"
+    
+    const colours = [];
+    let hue = h0;
+
+    for (let i = 0; i < n; i++) {
+        // HSL → RGB (simple formula, no library needed)
+        const h = (hue % 360) / 360;
+        const sat = s / 100, light = l / 100;
+
+        const a = sat * Math.min(light, 1 - light);
+        const f = t => {
+          const k = (t + h) % 1;
+          return light - a * Math.max(Math.min(k * 6, 4 - k * 6, 1), -1);
+        };
+
+        const [r, g, b] = [f(1 / 3), f(0), f(2 / 3)].map(v => v * 255);
+        colours.push(`#${toHex(r)}${toHex(g)}${toHex(b)}`);
+
+        hue += φ;          // next hue around the wheel
+    }
+    return colours;
 }

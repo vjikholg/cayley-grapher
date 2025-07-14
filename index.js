@@ -32,6 +32,8 @@ allGroups.forEach((g,i) => {
     sel.appendChild(opt); 
 }); 
 
+sel.value = "41"
+
 sel.addEventListener('change', (e) => {
     const idx = parseInt(sel.value);
     const groupData = allGroups[idx]; 
@@ -44,8 +46,6 @@ sel.addEventListener('change', (e) => {
 
     const group = new FiniteGroup(mtc, groupData.name);
     currentGraph.update(group);
-    
-
 
 });
 
