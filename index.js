@@ -43,7 +43,7 @@ BUS.addEventListener('group-change', e => {
 
 // changing-settings
 BUS.addEventListener('settings-changed', e => {
-    console.log("received setting change!")
+    // console.log("received setting change!")
     const activeLinks = e.detail; 
     currentGraph.graph.linkVisibility(link => activeLinks.has(link.gen));
 })

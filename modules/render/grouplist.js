@@ -6,7 +6,7 @@ import { Matrix }    from "../structs/matrix.js";
  */
 
 export const allGroups = {
-    list : await fetch('../data/output.json').then(res => res.json()), 
+    list : await fetch('../../data/output.json').then(res => res.json()), 
     groups : new Map(),
 
     getList() {
