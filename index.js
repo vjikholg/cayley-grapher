@@ -3,53 +3,47 @@
 // TODO: modify nodes to properly display matrices, group elements, id, etc., provide traversal formula on how this element was obtained in runtime
 // TODO: maybe "slow down" generation - show step by step of how group is generated, populated, etc. GENERATE GRAPH DURING MAKEGROUP would be really cool 
 
-
+// math lib
 import { CayleyGraph } from "./modules/cayleygraph.js"; 
 import { FiniteGroup } from "./modules/structs/finitegroup.js";
 import { Matrix }    from "./modules/structs/matrix.js";
-// import allGroups from './data/output.json' assert {type: 'json'};
 
-const allGroups = await fetch('./data/output.json').then(res => res.json());
+// web dev comps
+import { initializeGraph } from "./modules/render/buildgraph.js";
+import { allGroups } from "./modules/render/grouplist.js";
+import { initializeSettings, updateSettings, depopulateSettings} from "./modules/render/settingsbox.js";
+import { BUS } from "./modules/render/bus.js";
+import { initializeDropdown } from "./modules/render/dropdown.js";
 
-const groupData = allGroups.find(x => x.name === "c3xdic5"); 
+/**
+ * Handles default group generation and canvas implementation - to tweak settings check cayleygraph.js
+ */
 
-const mtc = groupData.generators.map((mtx) => {
-    const temp = new Matrix(groupData.glforder, mtx.length); 
-    temp.contents = mtx; 
-    return temp;
+
+const INIT_GROUP_VAL = "41"; // cross between c2, q8 
+
+let group = allGroups.getByIndex(INIT_GROUP_VAL);
+let canvas = initializeGraph('3d-graph'); 
+let currentGraph = new CayleyGraph(group, canvas); 
+// *** DEFAULT GROUP + CANVAS GENERATION END ***
+
+
+// Populates a dropdown list of available groups to render 
+
+initializeDropdown(INIT_GROUP_VAL); 
+initializeSettings(group.generators); 
+
+// changing-groups
+BUS.addEventListener('group-change', e => {
+    const group = e.detail; 
+    currentGraph.update(group); 
+    depopulateSettings();
+    updateSettings(group.generators); 
 })
 
-const group = new FiniteGroup(mtc, groupData.name); 
-
-let currentGraph = new CayleyGraph(group, '3d-graph'); 
-
-const sel = document.getElementById('group-select');
-
-allGroups.forEach((g,i) => {
-    const opt = document.createElement('option');
-    opt.value = i; 
-    opt.innerHTML = g.name; 
-    sel.appendChild(opt); 
-}); 
-
-sel.value = "41"
-
-sel.addEventListener('change', (e) => {
-    const idx = parseInt(sel.value);
-    const groupData = allGroups[idx]; 
-
-    const mtc = groupData.generators.map((mtx) => {
-    const temp = new Matrix(groupData.glforder, mtx.length); 
-    temp.contents = mtx; 
-    return temp;
-    }); 
-
-    const group = new FiniteGroup(mtc, groupData.name);
-    currentGraph.update(group);
-
-});
-
-sel.dispatchEvent(new Event('change'));
-
-
-
+// changing-settings
+BUS.addEventListener('settings-changed', e => {
+    console.log("received setting change!")
+    const activeLinks = e.detail; 
+    currentGraph.graph.linkVisibility(link => activeLinks.has(link.gen));
+})

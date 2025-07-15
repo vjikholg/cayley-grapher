@@ -1,7 +1,3 @@
-// import ForceGraph3D from '../modules/vendors/3d-force-graph.min.js'; 
-
-
-
 import { FiniteGroup } from './structs/finitegroup.js';
 import { Matrix } from './structs/matrix.js';
 
@@ -25,25 +21,9 @@ export class CayleyGraph {
      */
 
 
-    constructor(group, _domId) {
-        // handle 3d-force-graph logic
-        this.graph = ForceGraph3D()(document.getElementById(_domId))
-        .nodeId('id')
-        .nodeLabel('label')
-        .nodeVal('value')
-        .linkDirectionalArrowLength(5.5)
-        .linkDirectionalArrowRelPos(1)
-        .linkDirectionalParticles(1)
-        .linkDirectionalParticleWidth(1.4)
-        .linkDirectionalParticleSpeed(0.003)
-        .nodeRelSize([1])
-        
-        // handle d3 logic
-        this.graph.d3Force('link')
-            .distance(link => 30);
-        
+    constructor(group, canvas) {
+        this.graph = canvas;
         this.update(group);
-        
     }
 
     update(group) {

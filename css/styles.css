@@ -18,3 +18,14 @@
       position: fixed;
       inset: 0
     }
+    .graph-settings {
+        position: absolute; top: 1rem; right: 1rem;
+        font-size: 0.9rem;
+    }   
+    .graph-settings form {
+        background:#fff; border:1px solid #ccc; padding:0.5rem 0.75rem;
+        display:none;             /* toggled by JS */
+    }
+    .graph-settings input { 
+        margin-right:0.3em; 
+    }
