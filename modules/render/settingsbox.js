@@ -18,7 +18,7 @@ export function initializeSettings(generators) {
             ACTIVE.delete(genIdx);
             // console.log("setting unticked!")
         }
-        console.log(ACTIVE)
+        // console.log(ACTIVE)
         BUS.dispatchEvent(new CustomEvent('settings-changed', {detail: ACTIVE}));
     })
 }

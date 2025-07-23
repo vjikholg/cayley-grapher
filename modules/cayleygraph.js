@@ -1,5 +1,21 @@
 import { FiniteGroup } from './structs/finitegroup.js';
-import { Matrix } from './structs/matrix.js';
+import { Matrix } from './structs/matrix.js'; // 
+
+
+export const MATRIX_BY_ID = { 
+    map : new Map(),
+    get(id) {
+        return this.map.get(id)
+    }, 
+
+    set(id, mtx) {
+        this.map.set(id, mtx);
+    },
+
+    clear() {
+        this.map.clear();
+    }
+}; 
 
 export class CayleyGraph {
     /** 
@@ -20,24 +36,23 @@ export class CayleyGraph {
      * @param {FiniteGroup} group - a finite group and its elements
      */
 
-
     constructor(group, canvas) {
         this.graph = canvas;
         this.update(group);
     }
 
     update(group) {
+        MATRIX_BY_ID.clear(); 
         const palette = getGeneratorPalette(group.generators.length, {s: 80, l: 45});
         const key2idx = new Map();
         let nodes = []; 
             // caching elements so we can map from key -> element id. 
         // building node list while we're at it
         for (const [i, el] of group.elems.entries()) {
-            nodes.push({id: i, label: el.key, value: 4}) // value -> size of node
+            nodes.push({id: i, label: el.key, value: 0}) // value -> size of node
+            MATRIX_BY_ID.set(i, el.contents);
             key2idx.set(el.key, i);
         }
-
-        // console.log(nodes);
         
         // building link list
         // for each element, mult elem with generator, check target 
@@ -57,6 +72,7 @@ export class CayleyGraph {
         this.graph.graphData({nodes,links})
             .linkColor(link => palette[link.gen])
             .linkOpacity(1)
+
     }
 }
 
@@ -80,7 +96,7 @@ export class CayleyGraph {
  * const pastel  = getGeneratorPalette(6, {s:50,l:70});
  */
 
-function getGeneratorPalette(n, opts = {}) {
+export function getGeneratorPalette(n, opts = {}) {
     const { s = 65, l = 55, h0 = Math.random() * 360 } = opts;
     const φ = 360 * 0.61803398875;   // golden-ratio step in degrees
     const toHex = c =>
@@ -107,3 +123,4 @@ function getGeneratorPalette(n, opts = {}) {
     }
     return colours;
 }
+

@@ -9,7 +9,7 @@ export function initializeDropdown(defIdx) {
     allGroups.getList().forEach((g,i) => {
         const opt = document.createElement('option');
         opt.value = i; 
-        opt.innerHTML = g.name; 
+        opt.innerHTML = `${g.name} (${g.order})`; 
         SELECT.appendChild(opt); 
     });
 

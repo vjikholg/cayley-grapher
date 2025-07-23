@@ -5,7 +5,7 @@ import { Matrix }    from "../structs/matrix.js";
  * Handles group generation, caching already generated groups, with API to quickly grab + generate groups on demand
  */
 
-const dataUrl = new URL('../../data/output.json', import.meta.url); 
+const dataUrl = new URL('../../data/output_order500.json', import.meta.url); 
 
 export const allGroups = {
     list : await fetch(dataUrl).then(res => res.json()), 
