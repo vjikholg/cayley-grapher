@@ -49,7 +49,7 @@ export class CayleyGraph {
             // caching elements so we can map from key -> element id. 
         // building node list while we're at it
         for (const [i, el] of group.elems.entries()) {
-            nodes.push({id: i, label: el.key, value: 0}) // value -> size of node
+            nodes.push({id: i, label: el.key, value: 4}) // value -> size of node
             MATRIX_BY_ID.set(i, el.contents);
             key2idx.set(el.key, i);
         }
