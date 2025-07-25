@@ -24,18 +24,22 @@ const INIT_GROUP_VAL = "41"; // cross between c2, q8
 
 let group = allGroups.getByIndex(INIT_GROUP_VAL);
 let canvas = initializeGraph('3d-graph'); 
-let currentGraph = new CayleyGraph(group, canvas); 
+let currentGraph = new CayleyGraph(group, canvas);
+ 
 // *** DEFAULT GROUP + CANVAS GENERATION END ***
 
 
 // Populates a dropdown list of available groups to render 
 
-initializeDropdown(INIT_GROUP_VAL); 
+// initializeDropdown(INIT_GROUP_VAL); 
+initializeDropdown(); 
 initializeSettings(group.generators); 
+
 
 // changing-groups
 BUS.addEventListener('group-change', e => {
     const group = e.detail; 
+    // console.log(group);
     currentGraph.update(group); 
     depopulateSettings();
     updateSettings(group.generators); 
@@ -46,4 +50,8 @@ BUS.addEventListener('settings-changed', e => {
     // console.log("received setting change!")
     const activeLinks = e.detail; 
     currentGraph.graph.linkVisibility(link => activeLinks.has(link.gen));
+})
+
+document.addEventListener('resize', (e) => {
+    console.log(e)
 })

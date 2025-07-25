@@ -8,5 +8,14 @@
   },
   "author": "Victor",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "three": "^0.178.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.5"
+  },
+  "dependencies": {
+    "fuse": "^0.12.1"
+  }
 }

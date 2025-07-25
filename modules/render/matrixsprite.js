@@ -27,6 +27,13 @@ export function svgLoad(arr) {
     
 }
 
+
+/**
+ * 
+ * @param {Integer[][]} arr 2D matrix 
+ * @returns 
+ */
+
 export function urlGen(arr) {
     return texToSVG(arrayToTex(arr));
 
@@ -76,7 +83,6 @@ function svgTo3dObject(url, done) {
             // => dynamic rotation s.t., it faces the camera at all times 
             group.rotation.x = Math.PI; 
         
-
             done(group);
         }, 
         // onProgress - ignored 

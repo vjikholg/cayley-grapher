@@ -35,6 +35,7 @@ export const allGroups = {
     }, 
 
     getByIndex(idx) {
+        // console.log(idx);
         const name = this.list[idx].name; 
         return this.get(name);
     }

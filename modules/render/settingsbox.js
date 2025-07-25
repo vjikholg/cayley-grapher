@@ -30,6 +30,7 @@ export function depopulateSettings() {
 
 export function updateSettings(generators) {
     generators.forEach( (i) => {
+        // console.log("update setting fired")
         ACTIVE.add(i); 
         const label = document.createElement('label');
         label.innerHTML = `<input type="checkbox" data-gen="${i}" checked> ${i}`;

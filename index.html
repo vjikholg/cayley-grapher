@@ -4,13 +4,37 @@
   <meta charset="utf-8" />
   <link rel="stylesheet" href = "css/styles.css"> 
   <title>Cayley graph</title>
-
+  
 </head>
 <body>
+  
+  <script id="MJX-SCRIPT" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.min.js"></script>
+  <script>
+    // Tell MathJax not to scan the whole document (faster)
+    window.MathJax = {
+      tex: { 
+        packages: {'[+]': ['ams'] }
+      },
+      svg: { fontCache: 'none' },
+      startup: { typeset: false }
+    };
+  </script>
+
   <div id="sidebar">
+
+
+
+
+  <!-- div id="sidebar">
     <select id = "group-select"> </select> 
-  </div>
+  </div -->
+
   <div id="3d-graph"></div>
+
+<div id = "search-overlay">
+  <input id = "group-search" placeholder="Search group..." autocomplete = "off"> 
+  <ul id = "group-results" role = "listbox" aria-label = "Group Results" > </ul>
+</div>
 
   <!-- vendor bundle (defines global ForceGraph3D) -->
   <script src="./modules/vendors/3d-force-graph.min.js"></script>
@@ -22,6 +46,7 @@
   <form id="gen-form">
     <!-- checkboxes injected by JS -->
   </form>
+  
 </div>
 </body>
 </html>
