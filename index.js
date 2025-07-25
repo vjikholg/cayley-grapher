@@ -30,12 +30,15 @@ let currentGraph = new CayleyGraph(group, canvas);
 
 // Populates a dropdown list of available groups to render 
 
-initializeDropdown(INIT_GROUP_VAL); 
+// initializeDropdown(INIT_GROUP_VAL); 
+initializeDropdown(); 
 initializeSettings(group.generators); 
+
 
 // changing-groups
 BUS.addEventListener('group-change', e => {
     const group = e.detail; 
+    // console.log(group);
     currentGraph.update(group); 
     depopulateSettings();
     updateSettings(group.generators); 
@@ -46,4 +49,8 @@ BUS.addEventListener('settings-changed', e => {
     // console.log("received setting change!")
     const activeLinks = e.detail; 
     currentGraph.graph.linkVisibility(link => activeLinks.has(link.gen));
+})
+
+document.addEventListener('resize', (e) => {
+    console.log(e)
 })

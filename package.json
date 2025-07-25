@@ -8,5 +8,8 @@
   },
   "author": "Victor",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "fuse": "^0.12.1"
+  }
 }
