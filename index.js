@@ -51,6 +51,16 @@ BUS.addEventListener('settings-changed', e => {
     currentGraph.graph.linkVisibility(link => activeLinks.has(link.gen));
 })
 
-document.addEventListener('resize', (e) => {
-    console.log(e)
-})
+// resize canvas on window size change
+window.addEventListener('resize', onWindowResize, false);
+function onWindowResize() {
+    const width = window.innerWidth; 
+    const height = window.innerHeight;
+    const camera = canvas.camera(); 
+    const renderer = canvas.renderer();
+
+    camera.aspect = width / height; 
+    camera.updateProjectionMatrix(); 
+    renderer.setSize(width, height);
+
+}
