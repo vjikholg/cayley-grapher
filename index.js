@@ -51,9 +51,11 @@ BUS.addEventListener('settings-changed', e => {
     currentGraph.graph.linkVisibility(link => activeLinks.has(link.gen));
 })
 
+
 // resize canvas on window size change
 window.addEventListener('resize', onWindowResize, false);
 function onWindowResize() {
+    // first - resize canvas
     const width = window.innerWidth; 
     const height = window.innerHeight;
     const camera = canvas.camera(); 
@@ -63,4 +65,11 @@ function onWindowResize() {
     camera.updateProjectionMatrix(); 
     renderer.setSize(width, height);
 
+    // next resize navbar
+    const navbar = document.querySelector('.scene-nav-info'); // unsure why getElementByClassName.style === null so we'll just do inline
+    navbar.style.width = `${width}px`; 
 }
+
+
+
+// resize n

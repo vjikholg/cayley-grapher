@@ -1,22 +1,11 @@
-    body { margin: 0 } canvas { display: block } 
-    /* 
-    #sidebar {
-       position: fixed;
-       top: 10px;
-       left: 10px;  
-       width: 220px;
-       padding: 8px 12px; 
-       box-shadow: 0 2px 6px #0003;
-       background: rgba(250, 250, 250, 0); 
-       border-radius: 4px;
-       font-family: system-ui, sans-serif;
-       z-index: 10;
-       }
-
-    #group-select {
-      width: 100%;
-    }
-    */ 
+    body { 
+      margin: 0; 
+      overflow: hidden;  
+    } 
+    
+    canvas { 
+      display: block 
+    } 
 
     #3d-graph {
       position: fixed;
@@ -37,47 +26,47 @@
 
     /* SEARCH OVERLAY */
 
-#search-overlay{
-  position: fixed;          /* <— key: tie to viewport, not document */
-  top:2rem;
-  left:10rem;
-  transform: translateX(-50%);
-  width: 240px;
-  z-index: 100;             /* above canvas */
-  font-family: system-ui, sans-serif;
-}
+    #search-overlay{
+      position: fixed;          /* <— key: tie to viewport, not document */
+      top:2rem;
+      left:10rem;
+      transform: translateX(-50%);
+      width: 240px;
+      z-index: 100;             /* above canvas */
+      font-family: system-ui, sans-serif;
+    }
 
-#group-search{
-  width: 100%;
-  padding: 6px 8px;
-  border-radius: 6px;
-  border: 1px solid #777;
-  background: #111;
-  color: #fff;
-  box-sizing: border-box;
-}
+    #group-search{
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #777;
+      background: #111;
+      color: #fff;
+      box-sizing: border-box;
+    }
 
-#group-results{
-  list-style:inside;
-  margin:4px 0 0;
-  padding:0;
-  border:1px solid #555;
-  border-radius:6px;
-  max-height:240px;
-  overflow-y:auto;
-  background:#1a1a1acc;     /* translucent */
-  backdrop-filter:blur(6px);
-  display:none;      
-}
+    #group-results{
+      list-style:inside;
+      margin:4px 0 0;
+      padding:0;
+      border:1px solid #555;
+      border-radius:6px;
+      max-height:240px;
+      overflow-y:auto;
+      background:#1a1a1acc;     /* translucent */
+      backdrop-filter:blur(6px);
+      display:none;      
+    }
 
-#group-results li{
-  padding:.4rem .6rem;
-  cursor:pointer;
-  color:#ddd;
-  white-space:nowrap;
-}
+    #group-results li{
+      padding:.4rem .6rem;
+      cursor:pointer;
+      color:#ddd;
+      white-space:nowrap;
+    }
 
-#group-results li:hover{
-  background:#333;
-  color:#fff;
-}
+    #group-results li:hover{
+      background:#333;
+      color:#fff;
+    }
