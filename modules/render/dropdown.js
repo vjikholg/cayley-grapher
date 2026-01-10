@@ -32,7 +32,7 @@ export function initializeDropdown() {
         }
         
         if (INPUT.contains(e.target)) {
-            console.log(INPUT.value);
+            // console.log(INPUT.value);
             const hits = search(INPUT.value);
             populateResults(hits);
         }

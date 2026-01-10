@@ -1,7 +1,6 @@
 import { FiniteGroup } from './structs/finitegroup.js';
 import { Matrix } from './structs/matrix.js'; // 
 
-
 export const MATRIX_BY_ID = { 
     map : new Map(),
     get(id) {
@@ -41,6 +40,7 @@ export class CayleyGraph {
         this.update(group);
     }
 
+
     update(group) {
         MATRIX_BY_ID.clear(); 
         const palette = getGeneratorPalette(group.generators.length, {s: 80, l: 45});
@@ -72,7 +72,6 @@ export class CayleyGraph {
         this.graph.graphData({nodes,links})
             .linkColor(link => palette[link.gen])
             .linkOpacity(1)
-
     }
 }
 
@@ -98,7 +97,7 @@ export class CayleyGraph {
 
 export function getGeneratorPalette(n, opts = {}) {
     const { s = 65, l = 55, h0 = Math.random() * 360 } = opts;
-    const φ = 360 * 0.61803398875;   // golden-ratio step in degrees
+    const phi = 360 * 0.61803398875;   // golden-ratio step in degrees
     const toHex = c =>
         ('0' + Math.round(c).toString(16)).slice(-2);   // convert 0-255 → "00"-"ff"
     
@@ -112,14 +111,14 @@ export function getGeneratorPalette(n, opts = {}) {
 
         const a = sat * Math.min(light, 1 - light);
         const f = t => {
-          const k = (t + h) % 1;
-          return light - a * Math.max(Math.min(k * 6, 4 - k * 6, 1), -1);
+            const k = (t + h) % 1;
+            return light - a * Math.max(Math.min(k * 6, 4 - k * 6, 1), -1);
         };
 
         const [r, g, b] = [f(1 / 3), f(0), f(2 / 3)].map(v => v * 255);
         colours.push(`#${toHex(r)}${toHex(g)}${toHex(b)}`);
 
-        hue += φ;          // next hue around the wheel
+        hue += phi;          // next hue around the wheel
     }
     return colours;
 }
