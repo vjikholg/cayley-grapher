@@ -10,7 +10,10 @@ A browser-based Cayley graph visualizer that renders finite groups in 3D using a
 - **Client-side group construction** from the bundled dataset.
 
 ## Quick start
+### Browser Use
+You can access a live version of this project hosted [here](https://vjikholg.github.io/cayley-grapher/)
 
+### Building/Developing
 Because the app uses ES modules and fetches local JSON data, it must be served over HTTP. This can be done using Vite quickly and easily. 
 
 ```bash
