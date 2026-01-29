@@ -1,5 +1,5 @@
 # Cayley Grapher
-![preview-png](preview/image.png)
+[![preview-png](preview/image.png)](https://vjikholg.github.io/cayley-grapher/)
 A browser-based Cayley graph visualizer that renders finite groups in 3D using a lightweight JavaScript implementation and [`3d-force-graph`](https://github.com/vasturiano/3d-force-graph).
 
 ## Features
